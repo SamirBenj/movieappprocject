@@ -97,13 +97,16 @@ class _SearchMoviesState extends State<SearchMovies> {
                         final lienImg = snapshot.data![index].poster;
                         final titre = snapshot.data![index].title;
                         final year = snapshot.data![index].year;
+                        final imdID = snapshot.data![index].imdbID;
                         return Container(
-                          margin: EdgeInsets.all(10),
+                          // margin: EdgeInsets.all(7),
+                          padding: EdgeInsets.all(10),
                           child: WidgetList(
                             movies: [],
                             titre: titre,
                             lienImg: lienImg,
                             year: year,
+                            imdbid: imdID,
                           ),
                         );
                       },

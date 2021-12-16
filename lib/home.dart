@@ -27,8 +27,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _getAllMovies();
+    // var data = getDetailMovie('tt1375666');
   }
 
+  //Recupere les films
   void _getAllMovies() async {
     final movies = await getJsonMovie();
     setState(() {
@@ -47,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {},
         child: IconButton(
           onPressed: () {
+            //Page pour les favoris
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => FavoritePage()));
           },
@@ -119,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               children: [
                 Text(
-                  'What You Might Like !',
+                  'Ce Que Vous Pourrait Aimer!',
                   style: GoogleFonts.montserrat(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -129,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
+          //Affichage des film que pourrais aimer l'utilisateur
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -140,22 +144,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   final nomFilm = _movies[index].title;
                   final lienImg = _movies[index].poster;
                   final year = _movies[index].year;
+                  final imdID = _movies[index].imdbID;
                   return WidgetList(
                     movies: [],
                     titre: nomFilm,
                     lienImg: lienImg,
                     year: year,
+                    imdbid: imdID,
                   );
                 },
               ),
             ),
           ),
+          //Afichage de l'historique recuperé de la base de donées firebase
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Text(
-                  "What You've Seen",
+                  "Votre historique",
                   style: GoogleFonts.montserrat(
                     color: Colors.white,
                     fontSize: 15,
@@ -169,12 +176,22 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Expanded(
             child: StreamBuilder(
-              stream: db.collection("historique").snapshots(),
+              //Recuperation des donées dans la base de donées firebase
+              stream: db
+                  .collection("historique")
+                  .orderBy(
+                    'timestamp',
+                    descending: true,
+                  )
+                  .snapshots(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
+                }
+                if (snapshot.hasError) {
+                  return Text("Il y'a une erreur");
                 } else {
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -183,6 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       final lienImg = snapshot.data.docs[index]['lienImg'];
                       final nomFilm = snapshot.data.docs[index]['titre'];
                       final year = snapshot.data.docs[index]['year'];
+                      final docId = snapshot.data.docs[index].id;
                       // final imdbID = snapshot.data.docs[index]['imdbID'];
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -190,6 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           titre: nomFilm,
                           lienImg: lienImg,
                           year: year,
+                          docId: docId,
                         ),
                       );
                     },

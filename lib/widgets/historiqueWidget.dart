@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HistoricWidget extends StatefulWidget {
@@ -5,26 +6,29 @@ class HistoricWidget extends StatefulWidget {
     required this.titre,
     required this.lienImg,
     required this.year,
+    required this.docId,
   });
 
   final String titre;
   final String lienImg;
   final String year;
-
+  final String docId;
   @override
   State<HistoricWidget> createState() => _HistoricWidgetState();
 }
 
+//Wiget affichage de l'image du film qui à etait visite
 class _HistoricWidgetState extends State<HistoricWidget> {
+  final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _showDialogDetails();
+        // _showDialogDetails();
         // print('hello');
       },
       child: Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.bottomRight,
         children: [
           Container(
             margin: EdgeInsets.all(0),
@@ -36,6 +40,16 @@ class _HistoricWidgetState extends State<HistoricWidget> {
               ),
             ),
           ),
+          IconButton(
+            onPressed: () {
+              db.collection('historique').doc(widget.docId).delete();
+            },
+            icon: Icon(
+              Icons.delete,
+              color: Colors.red,
+              size: 35,
+            ),
+          )
         ],
       ),
     );
