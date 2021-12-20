@@ -4,15 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BottomSheetWidget extends StatelessWidget {
-  const BottomSheetWidget(
-      {Key? key,
-      required this.lienImg,
-      required this.year,
-      required this.titre})
-      : super(key: key);
+  const BottomSheetWidget({
+    Key? key,
+    required this.lienImg,
+    required this.year,
+    required this.titre,
+    required this.plot,
+    required this.note,
+    required this.genre,
+  }) : super(key: key);
   final String lienImg;
   final String year;
   final String titre;
+  final String plot;
+  final String note;
+  final String genre;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,11 +74,11 @@ class BottomSheetWidget extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                            plot,
                             maxLines: 4,
                             style: GoogleFonts.montserrat(
                               fontSize: 14,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w400,
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.start,
@@ -80,11 +86,36 @@ class BottomSheetWidget extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            year.toString(),
-                            style: GoogleFonts.montserrat(
-                              color: Colors.grey.shade400,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                year.toString(),
+                                style: GoogleFonts.montserrat(
+                                  color: Colors.grey.shade400,
+                                ),
+                              ),
+                              Text(
+                                note.toString(),
+                                style: GoogleFonts.montserrat(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  genre.toString(),
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -93,12 +124,6 @@ class BottomSheetWidget extends StatelessWidget {
                 ),
               ],
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 0.0, top: 10.0),
-            //   child: Row(
-            //     // mainAxisAlignment: MainAxisAlignment.center,
-            //     // crossAxisAlignment: CrossAxisAlignment.end,
-            //     children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton.icon(
@@ -117,9 +142,6 @@ class BottomSheetWidget extends StatelessWidget {
                 ),
               ),
             )
-            // ],
-            //   ),
-            // ),
           ],
         ),
       ),

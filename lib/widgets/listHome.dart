@@ -105,7 +105,7 @@ class _WidgetListState extends State<WidgetList> {
         // print(snapshot.data!.genre);
 
         if (snapshot.hasData) {
-          final String genre = snapshot.data?.imdbRating ?? 'nothing';
+          final String genre = snapshot.data?.genre ?? 'nothing';
           final String imdbRating = snapshot.data?.imdbRating ?? 'nothing';
           final String director = snapshot.data?.director ?? 'nothing';
           final String plot = snapshot.data?.plot ?? 'nothing';
@@ -113,7 +113,14 @@ class _WidgetListState extends State<WidgetList> {
           final String title = snapshot.data?.title ?? 'nothing';
           final String lienImg = snapshot.data?.poster ?? 'nothing';
           final String year = snapshot.data?.year ?? 'nothing';
-          return BottomSheetWidget(lienImg: lienImg, year: year, titre: title);
+          return BottomSheetWidget(
+            lienImg: lienImg,
+            year: year,
+            titre: title,
+            plot: plot,
+            note: imdbRating,
+            genre: genre,
+          );
         } else {
           return Center(child: CircularProgressIndicator());
         }

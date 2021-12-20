@@ -112,6 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Divider(
+              indent: 20.0,
+              endIndent: 20.0,
               height: MediaQuery.of(context).size.height * 0.00,
               thickness: 2,
               color: Colors.red,
@@ -122,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               children: [
                 Text(
-                  'Ce Que Vous Pourrait Aimer!',
+                  '  Ce Que Vous Pourrait Aimer !',
                   style: GoogleFonts.montserrat(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
